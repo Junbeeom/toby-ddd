@@ -4,12 +4,16 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import static com.example.splearn.domain.MemberStatus.PENDING;
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MemberTest {
+    private static final Logger log = LoggerFactory.getLogger(MemberTest.class);
     Member member;
     PasswordEncoder passwordEncoder;
 
@@ -30,12 +34,12 @@ class MemberTest {
 
 
 
-        member = Member.create("toby@splearn.app", "Toby", "secret", passwordEncoder);
+        member = Member.create(new MemberCreateRequest("toby@splearn.app", "Toby", "secret"), passwordEncoder);
     }
 
     @Test
     void createMember() {
-        assertThat(member.getStatus()).isEqualTo(MemberStatus.PENDING);
+        assertThat(member.getStatus()).isEqualTo(PENDING);
     }
 /*
     @Test
@@ -104,7 +108,28 @@ class MemberTest {
     void changePassword() {
         member.changePassword("veysecret", passwordEncoder);
 
-        assertThat(member.verifyPassword("verysecret", passwordEncoder)).isTrue();
+        assertThat(member.verifyPassword("veysecret", passwordEncoder)).isTrue();
+    }
+
+    @Test
+    @DisplayName("Active 체크 ")        
+    void isActivate() {
+         assertThat(member.isActive()).isFalse();
+
+         member.activate();
+         assertThat(member.isActive()).isTrue();
+
+         member.deActivate();
+        assertThat(member.isActive()).isFalse();
+
+    }
+
+    @Test
+    void invalidEmail() {
+        assertThatThrownBy(() ->
+                Member.create(new MemberCreateRequest("invalid email", "Toby", "secret"), passwordEncoder)
+        ).isInstanceOf(IllegalArgumentException.class);
+
     }
 
 
