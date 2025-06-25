@@ -1,6 +1,5 @@
 package com.example.splearn.domain;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import static com.example.splearn.domain.MemberStatus.PENDING;
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class MemberTest {
     private static final Logger log = LoggerFactory.getLogger(MemberTest.class);
@@ -34,11 +32,11 @@ class MemberTest {
 
 
 
-        member = Member.create(new MemberCreateRequest("toby@splearn.app", "Toby", "secret"), passwordEncoder);
+        member = Member.register(new MemberRegisterRequest("toby@splearn.app", "Toby", "secret"), passwordEncoder);
     }
 
     @Test
-    void createMember() {
+    void registerMember() {
         assertThat(member.getStatus()).isEqualTo(PENDING);
     }
 /*
@@ -127,7 +125,7 @@ class MemberTest {
     @Test
     void invalidEmail() {
         assertThatThrownBy(() ->
-                Member.create(new MemberCreateRequest("invalid email", "Toby", "secret"), passwordEncoder)
+                Member.register(new MemberRegisterRequest("invalid email", "Toby", "secret"), passwordEncoder)
         ).isInstanceOf(IllegalArgumentException.class);
 
     }
