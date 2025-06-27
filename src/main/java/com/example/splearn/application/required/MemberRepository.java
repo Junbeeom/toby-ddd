@@ -1,8 +1,8 @@
 package com.example.splearn.application.required;
 
 import com.example.splearn.domain.Email;
-import org.springframework.data.repository.Repository;
 import com.example.splearn.domain.Member;
+import org.springframework.data.repository.Repository;
 
 import java.util.Optional;
 

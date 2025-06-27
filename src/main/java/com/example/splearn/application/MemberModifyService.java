@@ -2,10 +2,8 @@ package com.example.splearn.application;
 
 import com.example.splearn.application.provided.MemberFinder;
 import com.example.splearn.application.provided.MemberRegister;
-
 import com.example.splearn.application.required.EmailSender;
 import com.example.splearn.application.required.MemberRepository;
-
 import com.example.splearn.domain.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
