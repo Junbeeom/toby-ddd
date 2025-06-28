@@ -22,11 +22,14 @@ public class Member {
     @NaturalId
     private Email email;
 
+    @Column(length = 100, nullable = false)
     private String nickname;
 
+    @Column(length = 200, nullable = false)
     private String passwordHash;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 50, nullable = false)
     private MemberStatus status;
 
 
